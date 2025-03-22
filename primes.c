@@ -107,12 +107,10 @@ int main(int argc, char *argv[]){
             {
                 perror("error al escribir en el pipe abuelo-padre\n");
                 exit(EXIT_FAILURE);
-            }
-            
-        }
-        wait(NULL);
+            } 
+        }        
         close(pipe_abuelo_padre[1]);
-        
+        wait(NULL);        
         
     }
 	return 0;
