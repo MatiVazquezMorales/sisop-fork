@@ -17,7 +17,7 @@ void funcion_hijo(int pipe_abuelo_padre[]){
     int pipe_padre_hijo[2];
 
     pipe(pipe_padre_hijo);
-    if(pipe_padre_hijo == -1){
+    if(pipe(pipe_padre_hijo) == -1){
         printf("error en el pipe\n");
         exit(0);
     }
@@ -77,7 +77,7 @@ int main(int argc, char *argv[]){
     int pipe_abuelo_padre[2];
 
     pipe(pipe_abuelo_padre);
-    if(pipe_abuelo_padre == -1){
+    if(pipe(pipe_abuelo_padre) == -1){
         printf("error en el pipe\n");
         exit(0);
     }
