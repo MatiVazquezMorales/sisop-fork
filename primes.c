@@ -102,8 +102,9 @@ int main(int argc, char *argv[]){
         for(int i = 2; i < n; i++){
             write(pipe_abuelo_padre[1], &i, sizeof(i));
         }
-        close(pipe_abuelo_padre[1]);
         wait(NULL);
+        close(pipe_abuelo_padre[1]);
+        
         
     }
 	return 0;
