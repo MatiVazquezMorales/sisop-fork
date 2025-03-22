@@ -18,9 +18,10 @@ void funcion_hijo(int pipe_abuelo_padre[]){
 
     pipe(pipe_padre_hijo);
     if(pipe(pipe_padre_hijo) == -1){
-        printf("error en el pipe\n");
-        exit(0);
+        perror("error en el pipe\n");
+        exit(EXIT_FAILURE);
     }
+
 
     pid_t hijo = fork();
 
@@ -46,6 +47,11 @@ void funcion_hijo(int pipe_abuelo_padre[]){
             if (numero % primo != 0)
             {
                 write(pipe_padre_hijo[1], &numero, sizeof(numero));
+                if (write(pipe_padre_hijo[1], &numero, sizeof(numero)) == -1) {
+                    perror("Error al escribir en pipe padre-hijo");
+                    exit(EXIT_FAILURE);
+                }
+                
             }
         }
         close(pipe_padre_hijo[1]);
@@ -78,8 +84,8 @@ int main(int argc, char *argv[]){
 
     pipe(pipe_abuelo_padre);
     if(pipe(pipe_abuelo_padre) == -1){
-        printf("error en el pipe\n");
-        exit(0);
+        perror("error en el pipe\n");
+        exit(EXIT_FAILURE);
     }
 
     pid_t hijo = fork();
