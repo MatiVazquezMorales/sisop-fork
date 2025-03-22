@@ -103,7 +103,12 @@ int main(int argc, char *argv[]){
     {
         /* zbuelo */
         for(int i = 2; i < n; i++){
-            write(pipe_abuelo_padre[1], &i, sizeof(i));
+            if (write(pipe_abuelo_padre[1], &i, sizeof(i)) == -1)
+            {
+                perror("error al escribir en el pipe abuelo-padre\n");
+                exit(EXIT_FAILURE);
+            }
+            
         }
         wait(NULL);
         close(pipe_abuelo_padre[1]);
