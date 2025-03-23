@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 
     // Ejecutar lo que quede si no llegó a NARGS
     if (contador > 0) {
-        char *args[contador + 2]; // +1 comando, +1 NULL
+		char **args = malloc((contador + 2) * sizeof(char *));
         args[0] = comando;
         for (int i = 0; i < contador; i++) {
             args[i + 1] = argumentos[i];
@@ -88,6 +88,7 @@ int main(int argc, char *argv[]) {
             perror("fork final falló");
             exit(EXIT_FAILURE);
         }
+		free(args);
     }
 
     free(linea);
