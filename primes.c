@@ -4,7 +4,17 @@
 #include <sys/types.h> // Para pid_t
 #include <sys/wait.h>  // Para wait()
 
-void funcion_hijo(int pipe_abuelo_padre[]){
+void imprimir_total(int pipe_abuelo_padre[], int primo){
+
+    printf("primo %i\n", primo);
+    int numero;
+    while (read(pipe_abuelo_padre[0], &numero, sizeof(numero)) > 0)
+    {
+        printf("primo %i\n", numero);
+    }
+}
+
+void funcion_hijo(int pipe_abuelo_padre[], int n){
     
     int primo;
     if(read(pipe_abuelo_padre[0], &primo, sizeof(primo)) <= 0){
@@ -12,7 +22,15 @@ void funcion_hijo(int pipe_abuelo_padre[]){
         exit(0);
     }
 
-    printf("primo %i\n", primo);
+    if (primo * primo > n)
+    {
+        imprimir_total(pipe_abuelo_padre, primo);
+        close(pipe_abuelo_padre[0]);
+        exit(0);
+    }
+    
+    printf("primo %i \n", primo);
+
 
     int pipe_padre_hijo[2];
 
@@ -32,7 +50,7 @@ void funcion_hijo(int pipe_abuelo_padre[]){
     {
         /* hijo */
         close(pipe_padre_hijo[1]);
-        funcion_hijo(pipe_padre_hijo);
+        funcion_hijo(pipe_padre_hijo, n);
         close(pipe_padre_hijo[0]);
         exit(0);
     }
@@ -95,7 +113,7 @@ int main(int argc, char *argv[]){
     {
         /* padre */
         close(pipe_abuelo_padre[1]);
-        funcion_hijo(pipe_abuelo_padre);
+        funcion_hijo(pipe_abuelo_padre, n);
         close(pipe_abuelo_padre[0]);
         exit(0);
     }
