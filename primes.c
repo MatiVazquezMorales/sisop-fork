@@ -120,7 +120,6 @@ int main(int argc, char *argv[]){
     else
     {
         /* zbuelo */
-        close(pipe_abuelo_padre[0]);
         for(int i = 2; i < n; i++){
             if (write(pipe_abuelo_padre[1], &i, sizeof(i)) == -1)
             {
@@ -129,6 +128,7 @@ int main(int argc, char *argv[]){
             } 
         }        
         close(pipe_abuelo_padre[1]);
+        close(pipe_abuelo_padre[0]);
         wait(NULL);        
         
     }
