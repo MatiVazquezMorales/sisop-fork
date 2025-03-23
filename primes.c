@@ -3,7 +3,6 @@
 #include <unistd.h>   // Para fork, pipe, read, write, close
 #include <sys/types.h> // Para pid_t
 #include <sys/wait.h>  // Para wait()
-#define LIMITE_PRIMOS 130
 
 void imprimir_total(int pipe_abuelo_padre[], int primo){
 
@@ -24,7 +23,7 @@ void funcion_hijo(int pipe_abuelo_padre[], int n){
         exit(0);
     }
 
-    if (primo * primo > n || primo > LIMITE_PRIMOS)
+    if (primo * primo > n)
     {
         imprimir_total(pipe_abuelo_padre, primo);
         exit(0);
