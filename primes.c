@@ -12,6 +12,7 @@ void imprimir_total(int pipe_abuelo_padre[], int primo){
     {
         printf("primo %i\n", numero);
     }
+    close(pipe_abuelo_padre[0]);
 }
 
 void funcion_hijo(int pipe_abuelo_padre[], int n){
@@ -25,7 +26,6 @@ void funcion_hijo(int pipe_abuelo_padre[], int n){
     if (primo * primo > n)
     {
         imprimir_total(pipe_abuelo_padre, primo);
-        close(pipe_abuelo_padre[0]);
         exit(0);
     }
     
@@ -121,7 +121,6 @@ int main(int argc, char *argv[]){
     {
         /* zbuelo */
         close(pipe_abuelo_padre[0]);
-
         for(int i = 2; i < n; i++){
             if (write(pipe_abuelo_padre[1], &i, sizeof(i)) == -1)
             {
@@ -130,7 +129,6 @@ int main(int argc, char *argv[]){
             } 
         }        
         close(pipe_abuelo_padre[1]);
-
         wait(NULL);        
         
     }
