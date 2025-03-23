@@ -129,7 +129,6 @@ int main(int argc, char *argv[]){
             } 
         }        
         close(pipe_abuelo_padre[1]);
-        close(pipe_abuelo_padre[0]);
         wait(NULL);        
         
     }
