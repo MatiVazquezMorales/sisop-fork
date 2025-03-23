@@ -23,7 +23,7 @@ void funcion_hijo(int pipe_abuelo_padre[], int n){
         exit(0);
     }
 
-    if (primo * primo > n)
+    if (primo * primo > n || primo > 100)
     {
         imprimir_total(pipe_abuelo_padre, primo);
         exit(0);
